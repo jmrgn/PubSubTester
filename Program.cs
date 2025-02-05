@@ -29,7 +29,8 @@ var serializerOptions = new JsonSerializerOptions()
 
 app.MapPost("api/messages", async (AddMessageRequest request) =>
 {
-    Environment.SetEnvironmentVariable("PUBSUB_EMULATOR_HOST", request.EmulatorPort);
+    var host = $"localhost:{request.EmulatorPort}";
+    Environment.SetEnvironmentVariable("PUBSUB_EMULATOR_HOST", host);
     var publisher = await new PublisherClientBuilder
     {
         TopicName = TopicName.FromProjectTopic(request.ProjectId, request.TopicName),
